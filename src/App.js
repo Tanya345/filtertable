@@ -1,7 +1,6 @@
 import './App.css';
 import React, { useEffect, useState, createContext } from 'react'
-import Students from './components/Students';
-import Chart from './components/Chart' 
+import Students from './components/Students'; 
 export const StudentsContext = createContext([]);
 
 
