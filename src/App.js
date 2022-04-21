@@ -1,24 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useEffect, useState, createContext } from 'react'
+import Students from './components/Students';
+import Chart from './components/Chart' 
+export const StudentsContext = createContext([]);
+
 
 function App() {
+  const api = 'https://api.hatchways.io/assessment/students';
+  const [studs, setStuds] = useState([])
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(api)
+      setStuds((await res.json()).students)
+    }
+    fetchData()
+  }, [])
+  // console.log(studs)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StudentsContext.Provider value={{ studs, setStuds}}>
+      <div className="App">
+        <Students />
+        {/* <Chart/> */}
+      </div>
+    </StudentsContext.Provider>
   );
 }
 
